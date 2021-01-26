@@ -6,7 +6,7 @@ module.exports = {
   output: {
     filename: "rp-mathjax.js",
     path: __dirname,
-    library: "RPPrompt",
+    library: "RPMathJax",
     libraryTarget: "umd"
   },
 
