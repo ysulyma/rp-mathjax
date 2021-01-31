@@ -11,3 +11,5 @@ export class MJXNonBlocking extends React.Component<Props, {}> {}
 export class MJXBlocking extends MJXNonBlocking {}
 
 export class MJX extends MJXNonBlocking {}
+
+export const MathJaxReady: Promise<typeof MathJax>;

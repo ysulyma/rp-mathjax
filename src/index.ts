@@ -5,5 +5,3 @@ export {
   MJXBlocking as MJX, MJXBlocking,
   MJXTextBlocking as MJXText, MJXTextBlocking
 };
-
-export * from "./xyjax";

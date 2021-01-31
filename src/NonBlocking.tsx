@@ -1,10 +1,8 @@
 /// <reference types="mathjax" />
 import * as React from "react";
-import type {ReactChild, ReactNode} from "react";
 import * as EventEmitter from "events";
 
-import {Player, Utils} from "ractive-player";
-const {attachClickHandler} = Utils.mobile;
+import {Utils} from "ractive-player";
 
 /**
 Promise for when MathJax has loaded. Option of defer
@@ -263,7 +261,7 @@ export function typeset(node: HTMLElement): Promise<void> {
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, node]);
     MathJax.Hub.Queue(resolve);
   });
-};
+}
 
 /* helper functions */
 function isStyleRule(rule: CSSRule): rule is CSSStyleRule {

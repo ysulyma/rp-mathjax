@@ -2,3 +2,4 @@
 node_modules
 
 rp-mathjax.js
+*.js.LICENSE.txt

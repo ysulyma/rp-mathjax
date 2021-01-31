@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "alwaysStrict": true,
-    "declaration": true,
-    "declarationDir": "types",
+    "declaration": false,
     "jsx": "react",
     "lib": ["es2015", "es2016", "es2017", "dom"],
     "moduleResolution": "node",
