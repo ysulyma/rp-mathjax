@@ -1,6 +1,6 @@
 # rp-mathjax
 
-[MathJax](https://mathjax.org/) plugin for [ractive-player](https://www.npmjs.com/package/ractive-player).
+[MathJax](https://mathjax.org/) plugin for [Liqvid](https://liqvidjs.org).
 
 ## Usage
 

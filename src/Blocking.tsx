@@ -1,10 +1,4 @@
-/// <reference types="mathjax" />
-import * as React from "react";
-import type {ReactChild, ReactNode} from "react";
-import * as EventEmitter from "events";
-
-import {Player, Utils} from "ractive-player";
-const {attachClickHandler} = Utils.mobile;
+import {Player} from "liqvid";
 
 import {MJXNonBlocking, MJXTextNonBlocking} from "./NonBlocking";
 

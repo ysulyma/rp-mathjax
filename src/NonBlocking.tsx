@@ -1,13 +1,10 @@
-/// <reference types="mathjax" />
 import * as React from "react";
 import * as EventEmitter from "events";
-
-import {Utils} from "ractive-player";
 
 /**
 Promise for when MathJax has loaded. Option of defer
 */
-export const MathJaxReady = new Promise<typeof MathJax>((resolve, reject) => {
+export const MathJaxReady = new Promise<typeof MathJax>((resolve) => {
   // need to use this id if script has defer attribute
   const script = document.getElementById("js-async-mathjax") as HTMLScriptElement;
   if (!script) return;
@@ -27,7 +24,7 @@ interface Props extends React.HTMLAttributes<HTMLSpanElement> {
   renderer?: "HTML-CSS" | "CommonHTML" | "PreviewHTML" | "NativeMML" | "SVG" | "PlainSource";
 }
 
-export class MJXNonBlocking extends React.Component<Props, {}> {
+export class MJXNonBlocking extends React.Component<Props> {
   private resolveReady: () => void;
   domElement: HTMLSpanElement;
   jax: MathJax.ElementJax;
@@ -46,7 +43,7 @@ export class MJXNonBlocking extends React.Component<Props, {}> {
     // hub will have lots of listeners, turn off warning
     this.hub.setMaxListeners(0);
     
-    this.ready = new Promise((resolve, reject) => this.resolveReady = resolve);
+    this.ready = new Promise((resolve) => this.resolveReady = resolve);
 
     for (const method of ["Rerender", "Text", "Typeset"]) {
       this[method] = this[method].bind(this);
@@ -106,8 +103,8 @@ export class MJXNonBlocking extends React.Component<Props, {}> {
   }
 
   Text(text: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const tasks = [];
+    return new Promise((resolve) => {
+      const tasks: [] = [];
 
       if (this.props.renderer) {
         const renderer = MathJax.Hub.config.menuSettings.renderer;
@@ -126,7 +123,7 @@ export class MJXNonBlocking extends React.Component<Props, {}> {
   }
 
   Typeset(): Promise<void> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const tasks = [];
 
       if (this.props.renderer) {
@@ -176,7 +173,7 @@ export class MJXTextNonBlocking extends React.Component<MJXTextProps> {
   constructor(props: MJXTextProps) {
     super(props);
 
-    this.ready = new Promise((resolve, reject) => this.resolveReady = resolve);
+    this.ready = new Promise((resolve) => this.resolveReady = resolve);
 
     this.ref = React.createRef<HTMLElement>();
   }
@@ -201,7 +198,7 @@ export class RenderGroup extends React.Component {
   ready: Promise<void>;
 
   componentDidMount() {
-    this.ready = Promise.all(this.promises).then(() => {});
+    this.ready = Promise.all(this.promises).then();
   }
 
   render() {
@@ -217,7 +214,7 @@ export class RenderGroup extends React.Component {
             if (typeof originalRef === "function") {
               originalRef(ref);
             } else if (originalRef && typeof originalRef === "object") {
-              (originalRef as React.MutableRefObject<MJX>).current = ref;
+              (originalRef as React.MutableRefObject<MJXNonBlocking>).current = ref;
             }
           }
         });
@@ -228,8 +225,8 @@ export class RenderGroup extends React.Component {
   }
 }
 
-function shouldInspect(node: ReactNode): node is React.ReactElement & React.RefAttributes<MJX> {
-  return React.isValidElement(node) && typeof node.type === "function" && node.type.prototype instanceof MJX;
+function shouldInspect(node: React.ReactNode): node is React.ReactElement & React.RefAttributes<MJXNonBlocking> {
+  return React.isValidElement(node) && typeof node.type === "function" && node.type.prototype instanceof MJXNonBlocking;
 }
 
 // get rid of the stupid focus rule
@@ -274,11 +271,11 @@ function onFullScreenChange(callback: EventListener) {
 }
 
 // belongs in a separate file, but currently only used here
-// (as well as in ractive-player, but that can"t be helped)
+// (as well as in liqvidliqvid, but that can't be helped)
 export function recursiveMap(
-  children: ReactNode,
-  fn: (child: ReactNode) => ReactNode
-) {
+  children: React.ReactNode,
+  fn: (child: React.ReactNode) => React.ReactNode
+): React.ReactNode {
   return React.Children.map(children, (child) => {
     if (!React.isValidElement(child)) {
       return child;
