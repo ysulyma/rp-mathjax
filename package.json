@@ -1,13 +1,20 @@
 {
   "name": "rp-mathjax",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MathJax 2.* plugin for Liqvid",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
   "files": [
-    "rp-mathjax.js",
-    "rp-mathjax.d.ts"
+    "dist/*"
   ],
-  "main": "rp-mathjax.js",
-  "typings": "rp-mathjax.d.ts",
   "author": "Yuri Sulyma <yuri@liqvidjs.org>",
   "keywords": [
     "liqvid",
