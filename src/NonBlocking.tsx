@@ -6,7 +6,7 @@ Promise for when MathJax has loaded. Option of defer
 */
 export const MathJaxReady = new Promise<typeof MathJax>((resolve) => {
   // need to use this id if script has defer attribute
-  const script = document.getElementById("js-async-mathjax") as HTMLScriptElement;
+  const script = document.querySelector(`script[src*="MathJax.js"]`);
   if (!script) return;
 
   // if MathJax already exists, resolve
